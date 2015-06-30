@@ -1,0 +1,86 @@
+<div style="height: auto; width: 100%">
+  <p id="notice"><%= notice %></p>
+
+  <div class="list-group">
+    <li class="list-group-item list-group-item-text">
+      <strong>Name:</strong>
+      <%= @lesson.topic %>
+    </li>
+
+    <li class="list-group-item list-group-item-text">
+      <strong>URL:</strong>
+      <%= @lesson.url %>
+    </li>
+  </div>
+  <p>
+
+  <div id=<%= "video"+@lesson.id.to_s %> class="media" style="float: left; height:600px; width: 50%">
+    <strong>Video</strong><br>
+    <iframe width="100%" height="400px" src="<%= @lesson.url %>" frameborder="0" allowfullscreen>
+
+    </iframe>
+
+<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/L9ArgxkC_Bc" frameborder="0" allowfullscreen></iframe>  -->
+  </div>
+  <div style="height: 600px; width: 45%; float: left; margin-left: 4%">
+    <h1>Chat</h1>
+
+    <ul id="chat" style="background-color: cornflowerblue; color: #F7F7F7; text-align: left; font-style: oblique; font-family: arial, sans-serif; font-size: medium">
+      <%= if (defined?(@messages))
+            @messages = Message.where(:lesson_id => @lesson.id)
+            render(@messages)
+          end %>
+    </ul>
+
+    <div>
+      <%= form_for @message=Message.new, url: {action: "create", controller: "messages"}, remote: true do |f| %>
+          <%= f.text_field :content %>
+          <%= f.hidden_field :lesson_id, :value => @lesson.id %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.submit "Send" %>
+      <% end %>
+    </div>
+
+    <%= subscribe_to "/messages/bla" %>
+  </div>
+
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= @lesson.course %>
+  </p>
+
+  <%= link_to 'Edit', edit_lesson_path(@lesson) %> |
+  <%= link_to 'Back', lessons_path %>
+</div>
+
+<!-- MSG DIALOG -->
+<div id="msgModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" style="width: 40%;max-height: 80%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="width:12px;">×</button>
+        <h2 class="text-center">Messages</h2>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    $("document").ready(function () {
+        var lesson_id = <%= @lesson.id %>; // for integer
+        var data = <%= @messages=Message.where(:lesson_id => @lesson.id)
+                raw @messages.to_json
+            %>;
+
+
+        createHistory(lesson_id, data)// this is your function in .js file
+    });
+
+
+</script>

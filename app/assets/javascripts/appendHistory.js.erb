@@ -1,0 +1,19 @@
+
+
+function createHistory(lesson_id,data){
+
+    $.each(data, function(i,item){
+        $("#chat").append("<li id=" + item["id"]+ ">"+item["content"]);
+        $("#" + item["id"]).append("<a href='#msgModal' role='button' data-toggle='modal' class='pull-right' style='color: #F7F7F7' >Drop</b>");
+//        localStorage.setItem("msg_id",item["id"]);
+        $("#" + item["id"]).bind("click",function (item){
+            var a = item.currentTarget.attributes[0];
+            console.log(a);
+        });
+
+    });
+
+}
+
+
+

@@ -1,0 +1,30 @@
+<!-- <p id="notice"><%= notice %></p> -->
+
+<div class="list-group">
+<li class="list-group-item">
+  <strong>Name:</strong>
+  <%= @course.name %>
+</li>
+
+<li class="list-group-item">
+  <strong>Description:</strong>
+  <%= @course.description %>
+</li>
+
+<li>
+  <strong>User:</strong>
+  <%= @course.get_user.name%>
+</li>
+
+<p>
+  <strong>Lessons</strong>
+  <%= @course.lessons.each do |lesson| %>
+      <tr>
+        <td><%= link_to lesson.topic,  lesson %></td>
+      </tr>
+  <% end %>
+</p>
+</div>
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

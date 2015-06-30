@@ -1,0 +1,17 @@
+<%= form_for(@pivot_tbl) do |f| %>
+  <% if @pivot_tbl.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pivot_tbl.errors.count, "error") %> prohibited this pivot_tbl from being saved:</h2>
+
+      <ul>
+      <% @pivot_tbl.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

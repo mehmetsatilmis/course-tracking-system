@@ -1,0 +1,8 @@
+PrivatePub.subscribe("/messages/bla", function(data, channel) {
+    $("#chat").append("<li id=" + data.message.id+ ">"+data.message.content.toString() + "</li>");
+    $("#" + data.message.id).append("<b role='button' data-toggle='modal' class='pull-right' style='color: #F7F7F7'>Drop</b>");
+    $("#" + data.message.id).bind("click",function (data){
+        console.log(data);
+    });
+
+});
